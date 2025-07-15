@@ -1,0 +1,310 @@
+/* 全体のリセットと基本設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+/* ヘッダーのスタイル */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* メインコンテンツエリア */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* フッターのスタイル */
+footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #ecf0f1;
+}
+
+footer h4 {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #bdc3c7;
+    opacity: 0.8;
+}
+
+/* タスク入力フォームのスタイル */
+form {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e1e8ed;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+#taskInput:focus {
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#taskInput::placeholder {
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+#regButton {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#regButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+#regButton:active {
+    transform: translateY(0);
+}
+
+/* タスクリストのスタイル */
+ul {
+    list-style: none;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.todoItem {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.todoItem:last-child {
+    border-bottom: none;
+}
+
+.todoItem:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.todoItem li {
+    flex: 1;
+    font-size: 1.1rem;
+    color: #333;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+
+/* ボタンの共通スタイル */
+.finButton, .delButton {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+    text-transform: capitalize;
+}
+
+/* 完了ボタンのスタイル */
+.finButton {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+}
+
+.finButton:hover {
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* 削除ボタンのスタイル */
+.delButton {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+.delButton:hover {
+    background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* アニメーション効果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.todoItem {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    footer h3 {
+        font-size: 1.1rem;
+    }
+    
+    footer h4 {
+        font-size: 0.9rem;
+    }
+    
+    form {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #taskInput {
+        width: 100%;
+    }
+    
+    #regButton {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .todoItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .todoItem li {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    
+    .finButton, .delButton {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    main {
+        padding: 0.5rem;
+    }
+    
+    form {
+        padding: 1rem;
+    }
+    
+    #taskInput {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    #regButton {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .todoItem {
+        padding: 1rem 0.5rem;
+    }
+    
+    .finButton, .delButton {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
