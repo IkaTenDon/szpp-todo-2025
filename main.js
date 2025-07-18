@@ -16,6 +16,12 @@ $(document).ready(function() {
         taskElement.css('text-decoration', isCompleted ? 'none' : 'line-through');
         console.log(isCompleted ? 'タスクが未完了に戻りました:' : 'タスクが完了しました:', taskElement.text());
     });
+
+    $('#todoList').on('click', '.delButton', function() {
+        const todoItem = $(this).closest('.todoItem');
+        todoItem.remove();
+        console.log('タスクが削除されました');
+    });
 });
 
 
