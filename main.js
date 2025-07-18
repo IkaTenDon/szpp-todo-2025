@@ -9,6 +9,13 @@ $(document).ready(function() {
             alert('タスクが入力されていません')
         }
     });
+
+    $('#todoList').on('click', 'finButton', function() {
+        const taskElement = $(this).siblings('li');
+        const isCompleted = taskElement.css('text-decoration').includes('line-through');
+        taskElement.css('text-decoration', isCompleted ? 'none' : 'line-through');
+        console.log(isCompleted ? 'タスクが未完了に戻りました:' : 'タスクが完了しました:', taskElement.text());
+    });
 });
 
 
