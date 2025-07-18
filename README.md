@@ -54,6 +54,61 @@ IDやクラス名はCSSで決まっているので,合わせる方が良い. \
 <!-- 次にタスクの表示 -->
 <!-- モックを作成する -->
 <!-- モックとは実際のデータを入れる前の借りの見た目 -->
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todoアプリ</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+     <header>
+        <h1>Todoアプリ</h1>
+     </header>
+     <main>
+        <!-- まずはタスクを入力するフォーム -->
+         <form>
+            <!-- 入力フォーム -->
+            <input id="taskInput" type="text" value="" placeholder="タスクを入力">
+            <!-- 登録フォーム -->
+            <input id="regButton" type="button" value="register">
+         </form>
+         <div>
+            <!-- とりあえずダミー -->
+            <ul>
+                <!-- ToDoリストの1タスク -->
+                <span class="todoItem">
+                    <!-- 内容 -->
+                    <li>タスク1</li>
+                    <!-- 完了ボタン -->
+                    <input class="finButton" type="button" value="finish">
+                    <!-- 削除ボタン -->
+                    <input class="delButton" type="button" value="delete">
+                </span>
+                <span class="todoItem">
+                    <li>タスク2</li>
+                    <input class="finButton" type="button" value="finish">
+                    <input class="delButton" type="button" value="delete">
+                </span>
+                <span class="todoItem">
+                    <li>タスク3</li>
+                    <input class="finButton" type="button" value="finish">
+                    <input class="delButton" type="button" value="delete">
+                </span>
+            </ul>
+         </div>
+     </main>
+     <footer>
+        <h3>作成者:Arm203</h3>
+        <h4>連絡先:ochiohita@gmail.com</h4>
+     </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
+```
 
 ## JSで入力の取得
 ### jQueryの復習
@@ -80,6 +135,23 @@ step2.jsを参考にしながら,main.jsを編集していく. \
 まずは,タスクの入力を取得してコンソールに出力する. \
 実装ができたら,F12キーを押して、コンソールの値を確認をする.
 
+```javascript
+// 画面が読み込まれて以降の処理
+$(document).ready(function() {
+    // 登録ボタンが押されたら
+    $('#regButton').on('click', function() {
+        // タスク入力からデータを取得
+        // trimはデータの空白を削除して取得する文字列のメソッド(機能)
+        const taskValue = $('#taskInput').val().trim();
+        // データが入っているなら
+        if (taskValue) {
+            console.log(`入力されたタスク: ${taskValue}`);
+        } else {
+            console.log('タスクが入力されていません。');
+        }
+    });
+});
+```
 ## JSでタスクの作成
 ### jQueryの復習2
 #### 要素の作成
@@ -137,6 +209,57 @@ step3.jsを参考にしながら、main.jsを編集していく. \
 タスクの入力を取得して、リストに追加する. \
 実装ができたら、HTMLのモック要素をコメントアウトまたは削除し、機能を確認する. 
 
+```javascript
+// 画面が読み込まれて以降の処理
+$(document).ready(function() {
+    // 登録ボタンが押されたら
+    $('#regButton').on('click', function() {
+        // タスク入力からデータを取得
+        // trimはデータの空白を削除して取得する文字列のメソッド(機能)
+        const taskValue = $('#taskInput').val().trim();
+        // データが入っているなら
+        if (taskValue) {
+            // console.log(`入力されたタスク: ${taskValue}`);
+            // todoItemを作成
+            const todoItem = createTodoItem(taskValue);
+            // 作成したtodoItemを表示するリストに追加
+            $('#todoList').append(todoItem);
+            // 入力欄を空にする
+            $('#taskInput').val('');
+        } else {
+            // console.log('タスクが入力されていません。');
+        }
+    });
+});
+
+// todoItemを作成する関数
+function createTodoItem(taskValue) {
+    // span要素を作成,todoItemというクラス名を設定
+    const todoItem = $('<span>').addClass('todoItem');
+
+    // li要素を作成してタスク内容を設定
+    const taskElement = $('<li>').text(taskValue);
+
+    // 完了ボタンを作成
+    const finButton = $('<input>').attr({
+        type: 'button',
+        value: 'finish'
+    }).addClass('finButton');
+
+    // 削除ボタンを作成
+    const delButton = $('<input>').attr({
+        type: 'button',
+        value: 'delete'
+    }).addClass('delButton');
+
+    // span要素に子要素を追加
+    todoItem.append(taskElement, finButton, delButton);
+
+    // 作成したtodoItemを返す
+    return todoItem;
+}
+```
+
 ## JSで完了と削除
 ### jQueryの復習3
 #### 要素の削除
@@ -173,6 +296,71 @@ $(this).siblings('li');
 完了ボタンを押したときに、タスクに斜線を入れる処理と、削除ボタンを押したときにタスクを削除する処理を実装する. \
 実装ができたら、完了と削除の機能を確認する.
 step4.jsを参考にしながら、main.jsを編集していく. \  
+```javascript
+// 画面が読み込まれて以降の処理
+$(document).ready(function() {
+    // 登録ボタンが押されたら
+    $('#regButton').on('click', function() {
+        // タスク入力からデータを取得
+        // trimはデータの空白を削除して取得する文字列のメソッド(機能)
+        const taskValue = $('#taskInput').val().trim();
+        // データが入っているなら
+        if (taskValue) {
+            // console.log(`入力されたタスク: ${taskValue}`);
+            // todoItemを作成
+            const todoItem = createTodoItem(taskValue);
+            // 作成したtodoItemを表示するリストに追加
+            $('#todoList').append(todoItem);
+            // 入力欄を空にする
+            $('#taskInput').val('');
+        } else {
+            // console.log('タスクが入力されていません。');
+        }
+    });
+
+    // 完了ボタンの機能（斜線をトグル）
+    $('#todoList').on('click', '.finButton', function() {
+        const taskElement = $(this).siblings('li');
+        const isCompleted = taskElement.css('text-decoration').includes('line-through');
+        taskElement.css('text-decoration', isCompleted ? 'none' : 'line-through');
+        console.log(isCompleted ? 'タスクが未完了に戻りました:' : 'タスクが完了しました:', taskElement.text());
+    });
+
+    // 削除ボタンの機能
+    $('#todoList').on('click', '.delButton', function() {
+        const todoItem = $(this).closest('.todoItem');
+        todoItem.remove();
+        console.log('タスクが削除されました');
+    });
+});
+
+// todoItemを作成する関数
+function createTodoItem(taskValue) {
+    // span要素を作成,todoItemというクラス名を設定
+    const todoItem = $('<span>').addClass('todoItem');
+
+    // li要素を作成してタスク内容を設定
+    const taskElement = $('<li>').text(taskValue);
+
+    // 完了ボタンを作成
+    const finButton = $('<input>').attr({
+        type: 'button',
+        value: 'finish'
+    }).addClass('finButton');
+
+    // 削除ボタンを作成
+    const delButton = $('<input>').attr({
+        type: 'button',
+        value: 'delete'
+    }).addClass('delButton');
+
+    // span要素に子要素を追加
+    todoItem.append(taskElement, finButton, delButton);
+
+    // 作成したtodoItemを返す
+    return todoItem;
+}
+```
 
 ## 完成
 これでTODoリストの基本的な機能が完成した. \
