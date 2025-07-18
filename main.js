@@ -10,7 +10,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#todoList').on('click', 'finButton', function() {
+    $('#todoList').on('click', '.finButton', function() {
         const taskElement = $(this).siblings('li');
         const isCompleted = taskElement.css('text-decoration').includes('line-through');
         taskElement.css('text-decoration', isCompleted ? 'none' : 'line-through');
